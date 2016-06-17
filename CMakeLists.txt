@@ -15,6 +15,8 @@ PROJECT(libzrtpcpp)
 SET(CPACK_PACKAGE_VERSION_MAJOR 4)
 SET(CPACK_PACKAGE_VERSION_MINOR 6)
 SET(CPACK_PACKAGE_VERSION_PATCH 3)
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -Wall") 
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -Wall")
 
 set (VERSION 4.6.3)
 set (SOVERSION 4)
@@ -233,7 +235,7 @@ set(zrtp_src_no_cache
     ${CMAKE_SOURCE_DIR}/zrtp/ZrtpConfigure.cpp
     ${CMAKE_SOURCE_DIR}/zrtp/ZrtpCWrapper.cpp
     ${CMAKE_SOURCE_DIR}/zrtp/Base32.cpp
-    ${CMAKE_SOURCE_DIR}/zrtp/EmojiBase32.cpp
+#    ${CMAKE_SOURCE_DIR}/zrtp/EmojiBase32.cpp
     ${CMAKE_SOURCE_DIR}/zrtp/zrtpB64Encode.c
     ${CMAKE_SOURCE_DIR}/zrtp/zrtpB64Decode.c
     ${CMAKE_SOURCE_DIR}/common/icuUtf8.c
