@@ -111,15 +111,20 @@ void ZIDCacheFile::checkDoMigration(char* name) {
     fseek(fdOld, 0L, SEEK_SET);
     if (fread(&recOld, sizeof(zidrecord1_t), 1, fdOld) != 1) {
         fclose(fdOld);
-        return;
+        fdOld == NULL;
+//        return;
     }
-    if (recOld.ownZid != 1) {
+    if (recOld.ownZid != 1 && fdOld != NULL) {
         fclose(fdOld);
-        return;
+        fdOld = NULL;
+//        return;
     }
     zidFile = fopen(name, "wb+");    // create new format file in binary r/w mode
     if (zidFile == NULL) {
-        fclose(fdOld);
+        if (fdOld != NULL) {
+            fclose(fdOld);
+        }
+        
         return;
     }
     // create ZIDRecord in new format, copy over own ZID and write the record
@@ -133,7 +138,12 @@ void ZIDCacheFile::checkDoMigration(char* name) {
     // Sequentially read old records, sequentially write new records
     int numRead;
     do {
-        numRead = fread(&recOld, sizeof(zidrecord1_t), 1, fdOld);
+        if (fdOld != NULL) {
+            numRead = fread(&recOld, sizeof(zidrecord1_t), 1, fdOld);
+        }else {
+            numRead = 0;
+        }
+        
         if (numRead == 0) {     // all old records processed
             break;
         }
